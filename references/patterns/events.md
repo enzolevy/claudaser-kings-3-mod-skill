@@ -45,10 +45,59 @@ l_english:
  my_mod.0001.a: "Interesting!"
 ```
 
+## Animations List
+
+Common portrait animations used in `left_portrait` / `right_portrait`:
+
+**Personality animations:**
+personality_bold, personality_callous, personality_compassionate, personality_content, personality_cynical, personality_dishonorable, personality_forgiving, personality_greedy, personality_honorable, personality_irrational, personality_rational, personality_zealous, personality_brave, personality_craven
+
+**War animations:**
+war_over_win, war_over_loss, war_standing_army
+
+**Emotion/state animations:**
+pain, fear, anger, worry, sadness, schadenfreude, happiness, boredom, flirtation, shock, disgust, admiration, prison, sick, dismissal, paranoia, shame, grief, rage, stress, ecstasy, mad
+
+## Themes
+
+Common event themes:
+
+- **General:** default, realm, diplomacy, intrigue, martial, stewardship, learning
+- **Conflict/dark:** war, battle, siege, death, dread, dungeon, healthcare, faith, culture
+- **Social/activity:** seduce, romance, feast, hunt, murder, friend, rival, pet
+
+## Event Backgrounds
+
+Common backgrounds used in events (set via `background = { ... }`):
+
+default, corridor, alley_day, alley_night, armory, battlefield, bedchamber, council_chamber, courtyard, dungeon, feast, feast_garden, forest, gallows, garden, market, market_east, market_tribal, physicians_room, prison, ship, sitting_room, study, tavern, terrain, throne_room, throne_room_east, tournament_grounds, village_center, wilderness
+
 ## Annotated Vanilla Example
 <!-- TODO: Add a real vanilla example. Run:
 grep -rn "type = character_event" $CK3_GAME_PATH/events/ | head -5
 and annotate the simplest result. -->
+
+## Dynamic Descriptions
+
+Events can use `first_valid` or `random_valid` to show different descriptions based on conditions:
+
+```
+desc = {
+    first_valid = {
+        triggered_desc = {
+            trigger = { has_trait = brave }
+            desc = event_name.desc_brave
+        }
+        triggered_desc = {
+            trigger = { has_trait = craven }
+            desc = event_name.desc_craven
+        }
+        desc = event_name.desc_default
+    }
+}
+```
+
+Each `triggered_desc` is checked in order; the first one whose `trigger` passes is used. The final bare `desc` acts as the fallback. Remember to add localization keys for every desc variant.
 
 ## Common Variants
 
@@ -150,6 +199,37 @@ my_mod.0011 = {
 }
 ```
 
+### Event with `after` block
+```
+my_mod.0015 = {
+	type = character_event
+	title = my_mod.0015.t
+	desc = my_mod.0015.desc
+	theme = realm
+
+	immediate = {
+		add_character_flag = had_merchant_event
+	}
+
+	option = {
+		name = my_mod.0015.a
+		add_gold = 100
+	}
+
+	option = {
+		name = my_mod.0015.b
+		add_prestige = 50
+	}
+
+	after = {
+		# Runs after ANY option, useful for cleanup
+		remove_character_flag = had_merchant_event
+	}
+}
+```
+
+The `after = { }` block runs AFTER whichever option the player picks. This is useful for cleanup (removing flags, clearing variables) that should happen regardless of choice, so you don't have to duplicate cleanup code in every option.
+
 ### Scripted effects defined locally in event file
 ```
 namespace = my_mod
@@ -168,6 +248,27 @@ my_mod.0020 = {
 	}
 }
 ```
+
+## On_actions Reference
+
+Common on_actions and their ROOT scope:
+
+| on_action | ROOT scope |
+|---|---|
+| `on_birth` | child |
+| `on_death` | dying character |
+| `on_war_started` | primary attacker |
+| `on_war_ended` | primary attacker |
+| `on_title_gain` | new holder |
+| `on_title_lost` | old holder |
+| `on_marriage` | spouse who married |
+| `on_divorce` | spouse who divorced |
+| `on_faith_change` | character |
+| `on_culture_change` | character |
+| `on_game_start` | (no character scope) |
+| `on_game_start_after_lobby` | (no character scope) |
+
+**Yearly on_actions** (`random_yearly`, `yearly_playable`, `five_year_playable`, etc.) — ROOT = a random character matching the on_action's criteria.
 
 ## Checklist
 - [ ] Event file in `events/` folder with `.txt` extension
@@ -190,3 +291,4 @@ my_mod.0020 = {
 - **Removing gold**: Use `remove_short_term_gold = 50`, not `add_gold = -50`. Negative add_gold causes a "missing perspective" error
 - **Loc scope prefix**: In localization, do NOT use `scope:` prefix for saved scopes. Write `[the_merchant.GetName]`, not `[scope:the_merchant.GetName]`
 - **Delayed events and loc**: When using `trigger_event = { id = X days = Y }`, saved scopes are available to script but NOT to localization in the target event. If you need to reference a saved scope in loc, fire the event immediately (`trigger_event = X`) or re-save the scope in the target event's `immediate` block
+- **Delayed scope pitfall**: When using `trigger_event` with `days = X`, saved scopes may become invalid if the target character dies or titles change hands during the delay. Always guard with `exists = scope:saved_char` in the triggered event's `trigger` block to prevent errors from referencing a scope that no longer exists

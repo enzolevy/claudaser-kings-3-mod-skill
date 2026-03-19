@@ -152,3 +152,74 @@ Use `set_immortal_age = 30` effect to keep them visually young.
 - **Opposite traits**: If you set `opposite = X`, a character can't have both traits simultaneously
 - **Genetic traits**: Set `genetic = yes` for proper inheritance behavior. Without it, `inherit_chance` uses simpler logic
 - **Dynamic names/icons**: If using `name = { first_valid = { ... } }`, include a fallback for `NOT = { exists = this }` to avoid errors when the trait is displayed without a character context
+
+## XP Tracks / Trait Progression
+
+Traits can have XP-based progression (like lifestyle traits). Pattern:
+```
+my_warrior_1 = {
+    category = lifestyle
+
+    # XP track — this trait upgrades when XP threshold is reached
+    track = { max = 100 }
+
+    # Next trait in progression
+    next_trait = my_warrior_2
+
+    # Modifiers
+    martial = 2
+    prowess = 1
+}
+
+my_warrior_2 = {
+    category = lifestyle
+    track = { max = 200 }
+    previous_trait = my_warrior_1
+    next_trait = my_warrior_3
+    martial = 4
+    prowess = 2
+}
+```
+- XP is added via `add_trait_xp = { trait = my_warrior_1 value = 10 }` effect
+- When XP reaches track max, trait automatically upgrades to next_trait
+
+## Compatibility Block
+
+Traits can define compatibility for matchmaking/marriage:
+```
+my_trait = {
+    compatibility = {
+        my_other_trait = medium_positive    # Values: very_negative, negative, medium_negative, low_negative, low_positive, medium_positive, positive, very_positive
+    }
+}
+```
+
+## same_opinion_if_same_faith
+
+Like same_opinion but only applies if both characters share the same faith:
+```
+my_pious_trait = {
+    same_opinion_if_same_faith = 15
+    # Characters with this trait get +15 opinion of each other, but ONLY if they share the same faith
+}
+```
+
+## Triggered Opinion Clarification
+
+Full pattern with multiple parameter values:
+```
+my_trait = {
+    triggered_opinion = {
+        opinion_modifier = my_trait_opinion
+        parameter = doctrine_parameter_key
+        check_missing = no  # Set to yes to apply when doctrine is MISSING
+    }
+}
+```
+The opinion_modifier must be defined separately in common/opinion_modifiers/:
+```
+my_trait_opinion = {
+    opinion = 20
+}
+```
+And the parameter refers to a doctrine parameter. The opinion applies when the CHARACTER EVALUATING has a faith with that doctrine parameter active.

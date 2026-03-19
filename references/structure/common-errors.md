@@ -64,9 +64,34 @@ Launch with `-debug_mode` to get the error tracker in-game (Errorhoof icon). Run
   4. Syntax error early in file prevents rest from loading
 - **Fix**: Check error.log, verify folder structure matches vanilla
 
+### Building not appearing in construction menu
+- **Cause**: One of:
+  1. Missing `is_enabled` or `can_construct` trigger
+  2. `type` field wrong or missing (regular / special / duchy_capital)
+  3. Building file not in `common/buildings/` or not a `.txt` file
+  4. Syntax error in building definition (check error.log)
+  5. `previous_building` doesn't match an existing building key
+- **Fix**: Check error.log first. Verify building type, triggers, and file location
+
+### Building modifiers not applying
+- **Cause**: One of:
+  1. Using `modifier` instead of `county_modifier` or `character_modifier`
+  2. Invalid modifier name (check `modifiers.log` from script_docs)
+  3. Building upgrade chain broken (`next_building` / `previous_building` mismatch)
+- **Fix**: Check the .info file at `references/info/common/buildings/_buildings.info` for valid fields
+
+### Building localization shows raw key
+- **Cause**: Wrong localization key prefix. Regular buildings use `building_<key>`, but some special buildings use `building_type_<key>`. Check vanilla examples for the specific building type.
+- **Fix**: Look at vanilla localization for buildings of the same type to confirm the prefix pattern
+
 ## File Encoding Issues
 
-- **ALL game files** (.txt, .yml, .gui): Must be **UTF-8 with BOM**. The game will log a warning for any file not in utf8-bom encoding. This applies to event files, trait files, decision files — everything, not just localization.
+**CRITICAL: ALL game files must be UTF-8 with BOM.** This is the #1 cause of "it doesn't work" issues.
+
+- **ALL files** (.txt, .yml, .gui, .asset): Must be **UTF-8 with BOM** encoding
+- This applies to: event files, trait files, decision files, building files, localization files — **everything**
+- The game will silently ignore or misparse files without BOM encoding
+- **How to check**: In VS Code, look at the bottom-right status bar for "UTF-8 with BOM". In Notepad++: Encoding menu → "Encode in UTF-8-BOM"
 - **Line endings**: The game handles both LF and CRLF, but LF is preferred
 
 ## Useful Console Commands for Debugging

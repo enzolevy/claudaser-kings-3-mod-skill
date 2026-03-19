@@ -23,11 +23,12 @@ Desktop.ini
 .env
 .env.*
 
-# Logs
+# Logs (except script_docs which are committed)
 *.log
+!references/script_docs/*.log
 
 # Communication folder (local only, used to share files/photos with Claude)
 Prompts/
 
-# Nested git metadata from embedded wiki
-references/wiki/.git/
+# Synced from game — user-specific, run ./scripts/sync_info.sh to populate
+references/info/

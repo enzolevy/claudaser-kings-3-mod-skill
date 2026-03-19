@@ -87,4 +87,26 @@ Contains .gui files that define the game's user interface layout. Key files and 
 | `history/provinces/` | Province setup (buildings, culture, religion) |
 | `history/wars/` | Historical war setups |
 
+## .info Files
+
+The game ships with `.info` files — Paradox's official syntax documentation for each moddable system. They document every valid key, type, and value. After running `./scripts/sync_info.sh`, these are available at `references/info/`.
+
+| Location in game | What it documents |
+|---|---|
+| `common/buildings/_buildings.info` | Building keys, types, modifiers |
+| `common/traits/_traits.info` | Trait keys, categories, modifiers, XP tracks |
+| `common/character_interactions/_character_interactions.info` | Interaction structure, AI logic |
+| `common/decisions/_decisions.info` | Decision structure, widgets, AI |
+| `common/casus_belli_types/_casus_belli_types.info` | CB structure, war scoring |
+| `common/on_actions/_on_actions.info` | On_action hooks and scopes |
+| `common/scripted_effects/_scripted_effects.info` | Scripted effect syntax |
+| `common/scripted_triggers/_scripted_triggers.info` | Scripted trigger syntax |
+| `common/culture/_culture.info` | Culture definitions |
+| `common/religion/religions/_religions.info` | Religion and faith definitions |
+| `events/_events.info` | Event structure, portraits, themes |
+| `gfx/...` | Graphical asset definitions |
+| `gui/...` | GUI widget definitions |
+
+There are ~165 .info files total across all systems. Always check the relevant .info file before writing code for a system you haven't worked with before.
+
 <!-- TODO: Run `find $CK3_GAME_PATH -type d -maxdepth 2` with actual game files to verify and complete this tree. -->

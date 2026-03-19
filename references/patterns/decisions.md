@@ -145,3 +145,75 @@ ai_will_do = {
 - **Missing localization**: Need all 4 keys. Default keys use the decision name as the base
 - **Cost not deducted**: If you handle cost in an event, use `minimum_cost` instead of `cost`. The `minimum_cost` block checks the character can afford it but doesn't deduct
 - **`is_valid` vs `is_valid_showing_failures_only`**: Both must be true to take the decision. `is_valid_showing_failures_only` only shows failed conditions in the tooltip, good for obvious requirements like `is_available_adult`
+
+## Widget Patterns
+
+Decisions can have custom widget selection UIs:
+```
+my_decision = {
+    # ... other fields ...
+
+    widget = {
+        gui = "decision_view_widget_generic_list"
+        controller = decision_option_list_controller
+
+        item = {
+            is_valid = { always = yes }
+            current_description = my_decision_option_desc
+            localization_values = {
+                VALUE = scope:value
+            }
+            effect = {
+                # Applied when this option is selected
+            }
+        }
+    }
+}
+```
+
+## ai_goal
+
+AI decision-making enhancement. The `ai_goal` block makes the AI actively work TOWARD meeting `is_valid` conditions:
+```
+my_decision = {
+    ai_check_interval = 36  # months
+
+    ai_potential = {
+        # Lightweight filter — checked BEFORE ai_will_do
+        is_adult = yes
+        is_landed = yes
+    }
+
+    ai_will_do = {
+        base = 0
+
+        modifier = {
+            add = 100
+            gold >= 500
+        }
+
+        # ai_goal weights make AI actively work TOWARD meeting is_valid conditions
+        ai_goal = {
+            gold >= 300
+            weight = 50
+        }
+    }
+}
+```
+
+## Dynamic Descriptions for Decisions
+
+Similar to events, decisions support dynamic desc using `first_valid` and `triggered_desc`:
+```
+my_decision = {
+    desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { is_ruler = yes }
+                desc = my_decision_desc_ruler
+            }
+            desc = my_decision_desc_default
+        }
+    }
+}
+```

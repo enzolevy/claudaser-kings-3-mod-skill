@@ -39,22 +39,51 @@ The game can generate exhaustive documentation of all triggers, effects, event t
 2. Start or load any game
 3. Open the console with the `` ` `` key (grave accent, top-left of keyboard)
 4. Type `script_docs` and press Enter
-5. Find the generated files in your logs folder:
-   - `CK3_USER_PATH/logs/`
+5. The files are generated in your logs folder (`CK3_USER_PATH/logs/`)
 
 ### Key script_docs Files
 
-| File | Contents |
-|---|---|
-| `effects.log` | All hardcoded effects with usage syntax, supported scopes, and arguments |
-| `triggers.log` | All hardcoded triggers with usage syntax and supported scopes |
-| `event_targets.log` | All event targets (scope transitions) with input/output scope types |
-| `modifiers.log` | All modifiers that can be used in scripted modifiers |
-| `event_scopes.log` | All valid scope types |
+| File | Contents | Lines |
+|---|---|---|
+| `effects.log` | All effects with usage syntax, supported scopes, and arguments | ~15K |
+| `triggers.log` | All triggers with usage syntax and supported scopes | ~12K |
+| `event_targets.log` | All event targets (scope transitions) with input/output scope types | ~2K |
+| `modifiers.log` | All modifiers that can be used in scripted modifiers | ~2K |
+| `event_scopes.log` | All valid scope types | ~500 |
 
 These logs are the definitive reference for what triggers, effects, and scopes actually exist in your version of the game.
 
-## Step 3: Create a Mod Skeleton
+## Step 3: Sync Documentation
+
+Run the sync script to copy `.info` files and `script_docs` into the skill:
+
+```bash
+./scripts/sync_info.sh
+```
+
+The script will:
+1. **Auto-detect** your Steam installation (or use `CK3_GAME_PATH` if set)
+2. **Copy ~166 .info files** from the game into `references/info/`
+3. **Copy script_docs logs** from your user data into `references/script_docs/`
+
+**Manual path override** (if auto-detection fails):
+```bash
+./scripts/sync_info.sh "/path/to/Crusader Kings III"
+```
+
+**Preview mode** (see what would be copied without copying):
+```bash
+./scripts/sync_info.sh --dry-run
+```
+
+**Re-sync after game update**:
+```bash
+./scripts/sync_info.sh --clean
+```
+
+The `.info` files are gitignored (user-specific). The `script_docs` are committed to the repo so other users don't have to generate them — but you should re-sync after game updates.
+
+## Step 4: Create a Mod Skeleton
 
 The easiest way to set up a new mod is through the CK3 launcher:
 
@@ -72,7 +101,7 @@ This generates:
 
 For more details, see references/patterns/mod-setup.md.
 
-## Step 4: Tell Claude Code Your Paths
+## Step 5: Tell Claude Code Your Paths
 
 When working on a CK3 mod, provide your paths so the skill can reference vanilla files:
 
