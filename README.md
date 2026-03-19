@@ -102,12 +102,25 @@ claudaser-kings-3-mod-skill/
 │   │   ├── schemes.md                    # Schemes (murder, seduce, befriend, custom)
 │   │   ├── court-positions.md            # Court positions (aptitude, salary, modifiers)
 │   │   ├── activities.md                 # Activities (feasts, hunts, tournaments, phases)
-│   │   ├── characters.md                 # Character interactions, schemes
+│   │   ├── characters.md                 # Character interactions
+│   │   ├── men-at-arms.md                # Men-at-arms types, terrain, counters
+│   │   ├── dynasties.md                  # Dynasty legacies, perks, houses
+│   │   ├── governments.md                # Government types, succession, holdings
+│   │   ├── lifestyles.md                 # Lifestyles, focuses, perk trees
+│   │   ├── story-cycles.md              # Story cycles, narrative arcs
+│   │   ├── holdings.md                   # Holding types, slots, modifiers
+│   │   ├── history.md                    # Historical characters, titles, provinces
+│   │   ├── factions.md                   # Faction types, demands, power thresholds
+│   │   ├── epidemics.md                  # Epidemics, disease spread, infection levels
+│   │   ├── great-projects.md             # Great projects, wonders, phases
+│   │   ├── ai.md                         # AI behavior, weighting, personality
 │   │   ├── localization.md               # Localization conventions
 │   │   ├── casus-belli.md                # Custom CBs, war logic
 │   │   ├── culture-religion.md           # Doctrines, tenets, innovations
 │   │   ├── gui.md                        # UI modding (widgets, windows)
-│   │   └── gfx.md                        # Graphical assets, portraits, CoA
+│   │   ├── gfx.md                        # Graphical assets, portraits, CoA, 3D models
+│   │   ├── map-modding.md                # Map data: provinces, terrain, heightmap
+│   │   └── map-objects.md                # 3D map objects, locators, entities, layers
 │   │
 │   ├── structure/
 │   │   ├── vanilla-tree.md               # Game folder tree + .info file locations

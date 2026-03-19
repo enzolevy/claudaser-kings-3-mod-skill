@@ -73,11 +73,24 @@ First-time setup instructions: read references/setup.md
 - Create an activity (feast, hunt, etc.) → references/patterns/activities.md
 - Create a character interaction → references/patterns/characters.md
 - Create a casus belli → references/patterns/casus-belli.md
+- Create men-at-arms types → references/patterns/men-at-arms.md
+- Create dynasty legacies/perks → references/patterns/dynasties.md
+- Create a government type → references/patterns/governments.md
+- Create a lifestyle/perks → references/patterns/lifestyles.md
+- Create a story cycle → references/patterns/story-cycles.md
+- Create a faction type → references/patterns/factions.md
+- Create an epidemic/disease → references/patterns/epidemics.md
+- Create a great project (wonder) → references/patterns/great-projects.md
+- Create holding types → references/patterns/holdings.md
+- Set up historical characters/titles/provinces → references/patterns/history.md
 - Modify culture/religion → references/patterns/culture-religion.md
 - Modify the GUI → references/patterns/gui.md
-- Add graphical assets → references/patterns/gfx.md
+- Add graphical assets (textures, models, portraits) → references/patterns/gfx.md
+- Modify the map (provinces, terrain, heightmap) → references/patterns/map-modding.md
+- Place 3D objects on the map (buildings, locators) → references/patterns/map-objects.md
 - Add localization → references/patterns/localization.md
 - Set up a new mod → references/patterns/mod-setup.md
+- Understand AI behavior/weighting → references/patterns/ai.md
 
 ### I want to understand game structure
 - Vanilla folder tree → references/structure/vanilla-tree.md
