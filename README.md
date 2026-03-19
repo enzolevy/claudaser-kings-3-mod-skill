@@ -4,6 +4,15 @@
 
 <!-- Replace YOUR_USERNAME with your GitHub username throughout this file -->
 
+## Related Skills
+
+| Skill | Scope | Repo |
+|-------|-------|------|
+| **Claudaser Kings 3** (this repo) | Base CK3 modding — 27 pattern guides, .info files, script_docs | [claudaser-kings-3-mod-skill](https://github.com/enzolevy/claudaser-kings-3-mod-skill) |
+| **Claudaser Kings 3 — AGOT Edition** | AGOT sub-modding — all vanilla content + 37 AGOT guides | [claudaser-kings-3-mod-skill-agot](https://github.com/enzolevy/claudaser-kings-3-mod-skill-agot) |
+
+Use this skill if you're modding **base CK3**. Use the **AGOT Edition** if you're creating sub-mods for [A Game of Thrones](https://steamcommunity.com/sharedfiles/filedetails/?id=2962333032) — it includes everything from this repo plus 37 dedicated AGOT guides covering dragons, mega wars, Valyrian steel, knighthood, Night's Watch, banking, and more.
+
 ## The Problem
 
 Paradox Script — the proprietary DSL used by Crusader Kings 3 — is poorly documented. The official wiki is often outdated, and the real reference is buried in the game files themselves. LLMs confidently hallucinate triggers, effects, and syntax that don't exist, making AI-assisted CK3 modding frustrating and error-prone.
@@ -144,7 +153,6 @@ Pattern files should follow the established format: context → minimal template
 
 ## Future Plans
 
-- 🐉 **AGOT sub-skill** — A Game of Thrones mod-specific conventions and systems (dragons, Valyrian steel, mega-wars, coronation, custom map, and more)
 - 🔧 **Advanced Paradox Script parser** / CLI tool
 - 📖 **More pattern recipes** based on community feedback
 
